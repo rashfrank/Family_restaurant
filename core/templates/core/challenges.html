@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лесное приключение — Kindred</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css_style.css' %}">
+</head>
+<body class="adventure-page">
+<header class="adventure-nav">
+  <div class="container nav-wrap">
+    <nav class="nav nav--dark">
+      <a class="brand" href="{% url 'home' %}">
+        <img src="{% static 'assets/img/logo.svg' %}" alt="" class="brand__mark">
+        <span class="brand__text">Кухня <em>Kindred</em></span>
+      </a>
+      <div class="nav__links">
+        <a href="{% url 'home' %}">Главная</a>
+        <a class="is-current" href="{% url 'challenges' %}">Приключение</a>
+        <a href="{% url 'menu' %}">Меню</a>
+      </div>
+      <a class="btn btn--olive" href="{% url 'booking' %}">Забронировать</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="forest-hero">
+    <div class="forest-hero__glow"></div>
+    <div class="container forest-hero__grid">
+      <div class="forest-hero__copy">
+        <span class="adventure-pill">✦ Детское приключение · 4–10 лет</span>
+        <h1>Лесное<br><em>приключение</em></h1>
+        <p>Пока вы обедаете, ваши малыши отправляются в путешествие по Зачарованному лесу…</p>
+        <a href="#quests" class="btn btn--forest">Начать приключение <span>→</span></a>
+      </div>
+      <div class="forest-scene" aria-label="Иллюстрация Зачарованного леса">
+        <div class="moon"></div><div class="stars">✦　·　✧　·　✦</div>
+        <div class="mountain mountain--back"></div><div class="mountain mountain--front"></div>
+        <div class="tree tree--1"></div><div class="tree tree--2"></div><div class="tree tree--3"></div><div class="tree tree--4"></div>
+        <div class="path"></div>
+        <div class="fox">🦊</div>
+        <div class="sign">ЗАЧАРОВАННЫЙ<br><small>ЛЕС</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey-section" id="quests">
+    <div class="container">
+      <div class="section-heading">
+        <div><span class="eyebrow">Твой маршрут</span><h2>Шаг за шагом к званию<br><em>юного шефа</em></h2></div>
+        <p>Три этапа, несколько маленьких побед и одна большая награда в конце пути.</p>
+      </div>
+
+      <div class="journey-progress">
+        <div class="journey-progress__line"><span></span></div>
+        <div class="journey-step journey-step--done"><div class="journey-step__icon">🗺</div><strong>Начать путь</strong><small>Ты в игре</small></div>
+        <div class="journey-step journey-step--active"><div class="journey-step__icon">🥄</div><strong>Золотая ложка найдена!</strong><small>Главный артефакт</small></div>
+        <div class="journey-step"><div class="journey-step__icon">👑</div><strong>Уровень Мастера</strong><small>Финальная награда</small></div>
+      </div>
+
+      <div class="quests-grid">
+        {% for challenge in challenges %}
+        <article class="challenge-card">
+          <div class="challenge-card__top"><span class="challenge-icon">✦</span><span class="challenge-status">{{ challenge.status }}</span></div>
+          <h3>{{ challenge.title }}</h3><p>{{ challenge.description }}</p>
+          <div class="challenge-card__meta"><span>◷ {{ challenge.duration }}</span><span>♟ {{ challenge.age_range }}</span></div>
+          <div class="challenge-card__reward"><span>🏆</span><div><small>Награда</small><strong>{{ challenge.reward }}</strong></div></div>
+        </article>
+        {% empty %}
+        <article class="challenge-card"><div class="challenge-card__top"><span class="challenge-icon">🍃</span><span class="challenge-status">Активный квест</span></div><h3>Следопыт леса</h3><p>Найди на карте спрятанные символы и собери секретный пароль хранителя.</p><div class="challenge-card__meta"><span>◷ 10 мин</span><span>♟ 4–7 лет</span></div><div class="challenge-card__reward"><span>🏆</span><div><small>Награда</small><strong>Лесной следопыт</strong></div></div></article>
+        <article class="challenge-card"><div class="challenge-card__top"><span class="challenge-icon">🥄</span><span class="challenge-status">Активный квест</span></div><h3>Тайна золотой ложки</h3><p>Разгадай три подсказки и отыщи главный артефакт Зачарованного леса.</p><div class="challenge-card__meta"><span>◷ 15 мин</span><span>♟ 6–10 лет</span></div><div class="challenge-card__reward"><span>🏆</span><div><small>Награда</small><strong>Золотая ложка</strong></div></div></article>
+        <article class="challenge-card"><div class="challenge-card__top"><span class="challenge-icon">🧪</span><span class="challenge-status">Активный квест</span></div><h3>Зелье юного шефа</h3><p>Собери правильные ингредиенты и придумай собственную волшебную смесь.</p><div class="challenge-card__meta"><span>◷ 12 мин</span><span>♟ 5–10 лет</span></div><div class="challenge-card__reward"><span>🏆</span><div><small>Награда</small><strong>Значок алхимика</strong></div></div></article>
+        {% endfor %}
+      </div>
+
+      <section class="rewards-panel">
+        <div class="rewards-panel__copy"><span class="eyebrow">Сокровища героя</span><h2>За каждую победу<br>тебя ждёт <em>награда</em></h2><p>Собери все отметки маршрута — и открой финальный подарок от команды Kindred.</p></div>
+        <div class="reward-items"><div class="big-reward"><span>🍨</span><div><small>Финальная награда</small><strong>Волшебный десерт</strong><p>Особое угощение после прохождения пути.</p></div></div><div class="big-reward"><span>🏅</span><div><small>Памятный трофей</small><strong>Значок юного шефа</strong><p>Забери его домой как доказательство приключения.</p></div></div></div>
+      </section>
+
+      <div class="adventure-cta"><div><span class="eyebrow">Готов?</span><h2>Лес уже ждёт своего героя.</h2></div><a href="{% url 'booking' %}" class="btn btn--olive btn--large">Начать приключение <span>→</span></a></div>
+    </div>
+  </section>
+</main>
+<footer class="footer footer--compact"><div class="container"><a class="brand" href="{% url 'home' %}"><img src="{% static 'assets/img/logo.svg' %}" alt="" class="brand__mark"><span class="brand__text">Кухня <em>Kindred</em></span></a><p>Вкусные моменты для всей семьи.</p></div></footer>
+</body></html>
